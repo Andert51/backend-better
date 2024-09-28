@@ -108,7 +108,7 @@ const getEmployeeById = async (req, res) => {
 const getEmployeeByUsername = async (req, res) => {
     handleValidationErrors(req)
      try {
-        const id = req.params.username
+        const username = req.params.username
         const employee = EmployeeService.getEmployeeByUsername(username)
         if (!employee){
             res.status(404).json({
@@ -132,7 +132,7 @@ const getEmployeeByUsername = async (req, res) => {
 const getEmployeeByRol = async (req, res) => {
     handleValidationErrors(req)
      try {
-        const id = req.params.rol
+        const rol = req.params.rol
         const employee = EmployeeService.getEmployeeByRol(rol)
         if (!employee){
             res.status(404).json({
