@@ -16,7 +16,7 @@ const handleValidationErrors = ( req, res, next) => {
 }
 
 const createEmployee = async (req, res) => {
-    handleValidationErrors(req)
+    handleValidationErrors(req) // Porque en rutas si se usa el check para validar los campos
     try {
         const employeeId = await EmployeeService.createEmployee(req.body, req.file)
         res.status(201).json({
@@ -33,7 +33,7 @@ const createEmployee = async (req, res) => {
 }
 
 const updateEmployee = async (req, res) => {
-    handleValidationErrors(req)
+    // handleValidationErrors(req)
      try {
         const id = req.params.id
         await EmployeeService.updateEmployee(id, req.body, req.file)
@@ -51,7 +51,7 @@ const updateEmployee = async (req, res) => {
 }
 
 const deleteEmployee = async (req, res) => {
-    handleValidationErrors(req)
+    // handleValidationErrors(req)
      try {
         const id = req.params.id
         await EmployeeService.deleteEmployee(id)
@@ -82,7 +82,7 @@ const getAllEmployee = async (req, res) => {
 }
 
 const getEmployeeById = async (req, res) => {
-    handleValidationErrors(req)
+    // handleValidationErrors(req)
      try {
         const id = req.params.id
         const employee = EmployeeService.getEmployeeById(id)
@@ -106,7 +106,7 @@ const getEmployeeById = async (req, res) => {
 }
 
 const getEmployeeByUsername = async (req, res) => {
-    handleValidationErrors(req)
+    // handleValidationErrors(req)
      try {
         const username = req.params.username
         const employee = EmployeeService.getEmployeeByUsername(username)
@@ -130,7 +130,7 @@ const getEmployeeByUsername = async (req, res) => {
 }
 
 const getEmployeeByRol = async (req, res) => {
-    handleValidationErrors(req)
+    // handleValidationErrors(req)
      try {
         const rol = req.params.rol
         const employee = EmployeeService.getEmployeeByRol(rol)

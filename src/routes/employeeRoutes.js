@@ -20,7 +20,7 @@ router.post(
     // middleware
     upload.single('image'),
     [
-        check('name').notEmpty().withMessage('Name is required'),
+        check('name').notEmpty().withMessage('Name is required'), // Validaciones a los campos, se uso handlevalidation en controlador de empleaddos 
         check('username').notEmpty().withMessage('Username is required'),
         check('password').isLength({min: 6}).withMessage('Password must be at least 6 characters long'),
     ],
