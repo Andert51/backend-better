@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
-import { getEmployeeByUsername } from './employeeController'
+import { getEmployeeByUsername } from './employeeController.js'
 
 export const login = async (req, res) => {
     const { username, password } = req.body
