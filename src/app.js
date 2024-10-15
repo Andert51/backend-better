@@ -7,7 +7,7 @@ import routes from './routes/index.js'
 import cors from 'cors'
 
 const corsOptions = {
-    origin: '*',
+    origin: '*', //dominio de la pagina que deseas que consuma el api, es decir nuestro backend
     optionsSuccessStatus: 200
 }
 
