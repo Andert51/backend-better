@@ -16,7 +16,7 @@ const handleValidationErrors = ( req, res, next) => {
 }
 
 const createEmployee = async (req, res) => {
-    handleValidationErrors(req) // Porque en rutas si se usa el check para validar los campos
+   // handleValidationErrors(req) // Porque en rutas si se usa el check para validar los campos
     try {
         const employeeId = await EmployeeService.createEmployee(req.body, req.file)
         res.status(201).json({

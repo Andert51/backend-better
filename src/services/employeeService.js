@@ -17,7 +17,7 @@ class EmployeeService {
             throw new Error('Username already exists!')
         }
 
-        const hashedPass = await bcrypt.hash(data.password.saltRound)
+        const hashedPass = await bcrypt.hash(data.password, saltRound)
 
         const newEmployee = new employeeModel(
             null,

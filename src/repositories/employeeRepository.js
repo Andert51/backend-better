@@ -71,7 +71,7 @@ class EmployeeRepository {
     }
 
     async getEmployeeByUsername(username){
-        const employee = db.collection('employees').where('username', '==', username).get
+        const employee = await db.collection('employees').where('username', '==', username).get()
         if(employee.empty){
             return null
         }
@@ -84,7 +84,7 @@ class EmployeeRepository {
             data.matsur,
             data.adress,
             data.phone,
-            data.city,
+            data.city,  
             data.state,
             data.username,
             data.password,

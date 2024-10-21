@@ -2,8 +2,12 @@ import jwt from  'jsonwebtoken'
 import dotenv from  'dotenv'
 dotenv.config()
 
+if (!process.env.JWT_SECRET) {
+    throw new Error('Missing JWT_SECRET environment variable')
+}
+
 const authMiddleware = (req, res, next) => {
-    const token = req.header('Authorization').replace('Bearer', '')
+    const token = req.header('Authorization').replace('Bearer ', '')
     if (!token){
         return res.status(401).json({
             message:  'Access denied. No token provided.'
