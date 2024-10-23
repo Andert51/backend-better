@@ -3,7 +3,7 @@ import employeeModel from '../models/employeeModel.js'
 
 class EmployeeRepository {
     async createEmployee(data){
-        const employee = await db.collection('employees').add({
+        const employee = await db.collection('employees_ComNub').add({
             name: data.name,
             patsur: data.patsur,
             matsur: data.matsur,
@@ -21,11 +21,11 @@ class EmployeeRepository {
     }
 
     async deleteEmployee(id){
-        await db.collection('employees').doc(id).delete()
+        await db.collection('employees_ComNub').doc(id).delete()
     }
 
     async getAllEmployee(){
-        const docs = await db.collection('employees').get()
+        const docs = await db.collection('employees_ComNub').get()
         const employees = []
         docs.forEach(doc => {
             const data = doc.data()
@@ -49,7 +49,7 @@ class EmployeeRepository {
     }
 
     async getEmployeeById(id){
-        const doc = await db.collection('employees').doc(id).get()
+        const doc = await db.collection('employees_ComNub').doc(id).get()
         if(!doc.exists){
             return null
         }
@@ -71,7 +71,7 @@ class EmployeeRepository {
     }
 
     async getEmployeeByUsername(username){
-        const employee = await db.collection('employees').where('username', '==', username).get()
+        const employee = await db.collection('employees_ComNub').where('username', '==', username).get()
         if(employee.empty){
             return null
         }
@@ -94,7 +94,7 @@ class EmployeeRepository {
     }
 
     async  getEmployeesByRol(rol){
-        const docs = await db.collection('employees').where('rol', '==',  rol).get()
+        const docs = await db.collection('employees_ComNub').where('rol', '==',  rol).get()
         const employees = []
         docs.forEach(doc => {
             const data = doc.data()
