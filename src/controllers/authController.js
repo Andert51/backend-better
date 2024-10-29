@@ -1,13 +1,14 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
-import { getEmployeeByUsername } from './employeeController.js'
+import EmployeeRepository from '../repositories/employeeRepository.js'
+const employeeRepository = new EmployeeRepository()
 
 export const login = async (req, res) => {
     const { username, password } = req.body
 
     try {
-        const user = await getEmployeeByUsername(username)
+        const user = await employeeRepository.getEmployeeByUsername(username)
 
         if(!user){
             res.status(401).json({
@@ -50,4 +51,28 @@ export const logout = (req, res) => {
         error: false,
         message: 'Succesfull logout'
     })
+}
+
+export const getUser = async (req, res) => {
+    try {
+        const userId = req.username.userId
+        const user = await employeeRepository.getEmployeeById(userId)
+
+        if(!user){
+            return res.status(404).json({
+                error: true,
+                message: 'User not found'
+            })
+        }
+
+        const { password, ...userWithoutPassword} =  user
+        res.json(userWithoutPassword)
+
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({msg: 'Error obtaining user'})
+
+        
+    }
+
 }
