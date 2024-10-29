@@ -108,6 +108,7 @@ const getEmployeeById = async (req, res) => {
 
 const getEmployeeByUsername = async (req, res) => {
     // handleValidationErrors(req)
+    console.log('@Nint req =>', req.body, req.params)
      try {
         const username = req.params.username
         const employee = EmployeeService.getEmployeeByUsername(username)

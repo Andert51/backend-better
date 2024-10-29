@@ -6,6 +6,7 @@ const employeeRepository = new EmployeeRepository()
 
 export const login = async (req, res) => {
     const { username, password } = req.body
+    console.log('@Nint body =>', username, password)
 
     try {
         const user = await employeeRepository.getEmployeeByUsername(username)

@@ -6,12 +6,12 @@ import routes from './routes/index.js'
 
 import cors from 'cors'
 
+dotenv.config()
+
 const corsOptions = {
     origin: '*', //dominio de la pagina que deseas que consuma el api, es decir nuestro backend
     optionsSuccessStatus: 200
 }
-
-dotenv.config()
 
 const app = express()
 app.use(express.json())
