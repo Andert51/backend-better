@@ -2,17 +2,17 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import fs from 'fs'
 import path from 'path'
-import employeeRepository from '../repositories/employeeRepository.js'
+import EmployeeRepository from '../repositories/employeeRepository.js'
 import employeeModel from '../models/employeeModel.js'
 import { sendPasswordResetEmail } from '../utils/emailService.js'
 
-const EmployeeRepository = new employeeRepository()
+const employeeRepository = new EmployeeRepository()
 const secret = process.env.JWT_SECRET
 const saltRound = 10 // Mientras mas grande el numero mas compleja la encriptacion, pero no puede ser cualquier numero
 
 class EmployeeService {
     async createEmployee(data, file) {
-        const existEmployee = await EmployeeRepository.getEmployeeByUsername(data.username)
+        const existEmployee = await employeeRepository.getEmployeeByUsername(data.username)
         if (existEmployee){
             throw new Error('Username already exists!')
         }
@@ -34,19 +34,19 @@ class EmployeeService {
             null
         )
 
-        const employeeId = await EmployeeRepository.createEmployee(newEmployee)
+        const employeeId = await employeeRepository.createEmployee(newEmployee)
 
         if (file) {
             const image = `${employeeId}_image.png`
             const imagePath = path.join('src', 'userImages', image)
             fs.writeFileSync(imagePath, file.buffer)
-            await EmployeeRepository.updateEmployee(employeeId, {image: image})
+            await employeeRepository.updateEmployee(employeeId, {image: image})
 
         }
     }
 
     async updateEmployee(id, data, file) {
-        const existEmployee = await EmployeeRepository.getEmployeeById(id)
+        const existEmployee = await employeeRepository.getEmployeeById(id)
         if (existEmployee) {
             throw new Error('Employee not found')
         }
@@ -62,36 +62,36 @@ class EmployeeService {
             data.image = image
         }
 
-        await  EmployeeRepository.updateEmployee(id, data)
+        await  employeeRepository.updateEmployee(id, data)
     }
 
     async  deleteEmployee(id) {
-        const existEmployee = await EmployeeRepository.getEmployeeById(id)
+        const existEmployee = await employeeRepository.getEmployeeById(id)
         if (!existEmployee) {
             throw new Error('Employee not found')
         }
 
-        await  EmployeeRepository.deleteEmployee(id)
+        await  employeeRepository.deleteEmployee(id)
     }
 
     async getAllEmployee(){
-        return await EmployeeRepository.getAllEmployee()
+        return await employeeRepository.getAllEmployee()
     }
 
     async  getEmployeeById(id){
-        return await EmployeeRepository.getEmployeeById(id)
+        return await employeeRepository.getEmployeeById(id)
     }
 
     async getEmployeeByUsername(username){
-        return await EmployeeRepository.getEmployeeByUsername(username)
+        return await employeeRepository.getEmployeeByUsername(username)
     }
 
     async  getEmployeeByRol(rol){
-        return await EmployeeRepository.getEmployeeByRol(rol)
+        return await employeeRepository.getEmployeeByRol(rol)
     }
 
     async generatePasswordResetToken(username){
-        const existEmployee = await  EmployeeRepository.getEmployeeByUsername(username)
+        const existEmployee = await  employeeRepository.getEmployeeByUsername(username)
         if (!existEmployee) {
             throw new Error('User does not exists')
         }
@@ -104,7 +104,7 @@ class EmployeeService {
         try {
             const decoded = jwt.verify(token, secret)
             const hashedPassword = await bcrypt.hash(newPassword, saltRound)
-            await  EmployeeRepository.updateEmployee(decoded.id, {password: hashedPassword})
+            await  employeeRepository.updateEmployee(decoded.id, {password: hashedPassword})
             
         } catch (error) {
             throw new Error('Error resetting password, token expired')

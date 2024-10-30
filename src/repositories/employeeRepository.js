@@ -93,7 +93,7 @@ class EmployeeRepository {
         )
     }
 
-    async  getEmployeesByRol(rol){
+    async getEmployeeByRol(rol){
         const docs = await db.collection('employees_ComNub').where('rol', '==',  rol).get()
         const employees = []
         docs.forEach(doc => {
@@ -115,6 +115,10 @@ class EmployeeRepository {
         })
 
         return  employees
+    }
+
+    async updateEmployee(id, data){
+        await db.collection('employees_ComNub').doc(id).update(data)
     }
 }
 

@@ -17,7 +17,7 @@ export const login = async (req, res) => {
                 message: 'Invalid username'
             })
         }
-
+        console.log('@Nint user =>', user)
         const isValid = await bcrypt.compare(password, user.password)
 
         if (!isValid){
@@ -35,8 +35,10 @@ export const login = async (req, res) => {
         { expiresIn: '2h' }
 
         )
-
-    return res.json({ token })
+        return res.status(200).json({
+            success: true,
+            token: token
+        })
         
     } catch (error) {
         res.status(401).json({
@@ -47,16 +49,9 @@ export const login = async (req, res) => {
     }
 }
 
-export const logout = (req, res) => {
-    res.json({
-        error: false,
-        message: 'Succesfull logout'
-    })
-}
-
 export const getUser = async (req, res) => {
     try {
-        const userId = req.username.userId
+        const userId = req.user.userId
         const user = await employeeRepository.getEmployeeById(userId)
 
         if(!user){
@@ -77,3 +72,11 @@ export const getUser = async (req, res) => {
     }
 
 }
+
+export const logout = (req, res) => {
+    res.json({
+        error: false,
+        message: 'Succesfull logout'
+    })
+}
+
